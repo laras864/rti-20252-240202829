@@ -65,21 +65,20 @@ Nama Peneliti    : Anindiya Larasati
 Tanggal          : 12 Juli 2026
 
 1. Ketika membaca klaim "metode X 95% akurat":
-   - Pertanyaan pertama saya: ____________________
-   - Data yang dibutuhkan untuk verifikasi: ____________________
+   - Pertanyaan pertama saya: Bagaimana spesifikasi testbed (hardware/software) yang digunakan dalam pengujian, dan apakah dataset yang digunakan (20.058 baris data catur) cukup representatif untuk merepresentasikan beban kerja "Big Data" yang sebenarnya di instansi?
+   - Data yang dibutuhkan untuk verifikasi: Data hasil pengujian dengan skenario concurrency (banyak pengguna mengakses bersamaan) dan variasi ukuran data yang jauh lebih besar (skala jutaan baris) untuk melihat apakah PostgreSQL tetap unggul di beban kerja yang lebih berat.
 
 2. Posisi paradigma:
-   - Pendekatan: [ ] Positivis  [ ] Interpretivis  [ ] Design Science  [ ] Mixed
-   - Alasan: ____________________
+   - Pendekatan: [X] Positivis  [ ] Interpretivis  [ ] Design Science  [ ] Mixed
+   - Alasan: Penelitian ini menggunakan pendekatan Positivis karena bertujuan mengukur performa (respon waktu) secara objektif dan kuantitatif melalui eksperimen terkontrol dengan skenario yang sudah ditentukan.
 
 3. Identifikasi distorsi:
-   - Asumsi tersembunyi: ____________________
-   - Sumber bias potensial: ____________________
-   - Langkah mitigasi: ____________________
+   - Asumsi tersembunyi: Peneliti berasumsi bahwa pengujian pada satu tabel tanpa relasi sudah cukup adil untuk membandingkan PostgreSQL, MySQL, dan MongoDB.
+   - Sumber bias potensial: Bias perangkat keras (pengujian hanya dilakukan pada satu testbed spesifik). Melakukan pengujian pada berbagai spesifikasi hardware dan sistem operasi yang berbeda untuk melihat konsistensi hasil.
 
 4. Komitmen etika:
-   - Data yang tidak akan dimanipulasi: ____________________
-   - Batasan yang diakui sejak awal: ____________________
+   - Data yang tidak akan dimanipulasi: Data raw hasil pengukuran waktu respon setiap kueri (tidak membuang data outlier tanpa alasan teknis yang jelas).
+   - Batasan yang diakui sejak awal: Penelitian ini tidak menggunakan data berelasi dan terbatas pada dataset catur dari Kaggle.
 ```
 
 ---
@@ -93,23 +92,23 @@ Pilih satu paper riset di bidang TI yang mengklaim "metode X meningkatkan perfor
 > **Contoh domain TI:** "Deteksi anomali lalu-lintas jaringan menggunakan CNN — akurasi meningkat 94% vs baseline SVM 87%." Distorsi potensial: apakah dataset normal/anomali seimbang? Apakah hanya diuji pada satu vendor traffic?
 
 **Paper yang dipilih:**
-> Judul: _______________________________________________
-> Penulis (Tahun): ______________________________________
-> Sumber/Link DOI: _____________________________________
+> Judul: Perbandingan Performa Respon Waktu Kueri MySQL, PostgreSQL, dan MongoDB
+> Penulis (Tahun): Yudha Yunanto Putra, Oktania Purwaningrum, Rivaldo Hadi Winata (2022)
+> Sumber/Link DOI: http://ejournal.upnjatim.ac.id/index.php/sibc/article/view/1515 
 
 | Tahap | Apa yang Dilakukan | Potensi Distorsi |
 |-------|-------------------|-----------------|
-| Reality → Data | *Contoh: Kumpulkan log server 30 hari* | *Contoh: Hanya ambil jam sibuk* |
-| Data → Processing | | |
-| Processing → Analysis | | |
-| Analysis → Inference | | |
-| Inference → Knowledge | | |
+| Reality → Data | Mengambil dataset catur dari Kaggle. | Selection Bias: Dataset catur mungkin tidak mencerminkan pola data yang biasa dihadapi sistem instansi riil. |
+| Data → Processing | Melakukan eksekusi kueri INSERT, SELECT, UPDATE, DELETE, SUM, COUNT. | Measurement Bias: Pengujian mungkin dipengaruhi oleh proses background pada OS Windows yang digunakan. |
+| Processing → Analysis | Menjumlahkan hasil waktu respon dari perulangan untuk mendapatkan total performa. | Oversimplification: Menjumlahkan total waktu respon bisa menyembunyikan karakteristik performa spesifik per jenis kueri. |
+| Analysis → Inference | Menyimpulkan PostgreSQL paling cepat secara keseluruhan. | Overgeneralization: Mengklaim PostgreSQL paling cepat tanpa mempertimbangkan use case spesifik (misal: MongoDB mungkin lebih baik untuk data tidak terstruktur). |
+| Inference → Knowledge | Memberikan acuan pemilihan DBMS bagi instansi. | Assumption: Peneliti mengasumsikan hasil lab akan sama persis dengan implementasi di instansi. |
 
-**Distorsi paling besar di tahap:** ________________________
+**Distorsi paling besar di tahap:**  Analysis → Inference
 
 **Dua distorsi spesifik yang teridentifikasi:**
-1. ___________________________________________________
-2. ___________________________________________________
+1. Asumsi bahwa total waktu respon adalah metrik terbaik untuk membandingkan DBMS. 
+2. Dataset yang homogen. 
 
 ---
 
@@ -117,20 +116,16 @@ Pilih satu paper riset di bidang TI yang mengklaim "metode X meningkatkan perfor
 
 Skenario: Seorang peneliti menemukan bahwa jika 3 data point outlier dihapus, hasil eksperimennya menjadi signifikan. Dengan outlier, hasilnya tidak signifikan.
 
-| Perspektif | Analisis |
-|------------|---------|
-| Kejujuran ilmiah | *Contoh: Laporkan kedua versi (dengan dan tanpa outlier)* |
-| Transparansi | |
-| Peer review | |
+**Perspektif:** Kejujuran ilmiah menuntut peneliti untuk melaporkan hasil apa adanya. Jika PostgreSQL ternyata lambat pada kueri tertentu (misalnya INSERT), hal tersebut harus tetap ditampilkan untuk memberikan gambaran objektif. Menghapus data demi membuat PostgreSQL terlihat selalu menang adalah tindakan manipulasi data.
 
 **Keputusan akhir dan justifikasi:**
-> ___________________________________________________
+> Peneliti harus menampilkan hasil pengujian secara transparan. Jika ada outlier yang sangat tinggi (misalnya karena sistem Windows melakukan update otomatis saat pengujian), peneliti boleh mengeluarkan data tersebut hanya jika dijelaskan dalam bagian "Batasan Penelitian", agar pembaca tetap mendapatkan informasi yang akurat.
 
 ---
 
 ## Latihan 3 — Posisi Paradigma
 
-**Topik riset:** ________________________________________
+**Topik riset:** Perbandingan Performa Respon Waktu Kueri MySQL, PostgreSQL, dan MongoDB.
 
 > **Skala 1–5:** 1 = tidak sesuai sama sekali dengan topik ini, 5 = sangat sesuai dan dominan digunakan pada riset bertopik serupa.
 
@@ -140,8 +135,8 @@ Skenario: Seorang peneliti menemukan bahwa jika 3 data point outlier dihapus, ha
 | Jenis data yang dikumpulkan | *Metrik numerik, log eksperimen* | *Wawancara, observasi kualitatif* | *Hasil uji artefak, komparasi kinerja* |
 | Limitasi paradigma | | | |
 
-**Paradigma yang dipilih:** _____________________________
-**Alasan:** ____________________________________________
+**Paradigma yang dipilih:** positivis
+**Alasan:** Fokus riset adalah mengukur fenomena (kecepatan respon DBMS) secara objektif melalui eksperimen yang dapat diulang (reproducible) dengan metrik waktu (milidetik) yang presisi.
 
 ---
 
@@ -150,5 +145,4 @@ Skenario: Seorang peneliti menemukan bahwa jika 3 data point outlier dihapus, ha
 > Sebelum membaca materi ini, apakah pernah mempertanyakan klaim "95% akurat"? Setelah memahami rantai distorsi, pertanyaan apa yang sekarang akan diajukan saat membaca paper?
 
 **Jawaban:**
-> ___________________________________________________
-> ___________________________________________________
+> Sebelum mempelajari materi ini, saya cenderung menerima mentah-mentah klaim performa atau hasil riset yang disajikan dalam bentuk angka (misalnya: "Sistem X lebih cepat Y% dibanding sistem Z") tanpa memikirkan proses di balik perolehan angka tersebut. Setelah memahami rantai distorsi (Reality → Data → Processing → Analysis → Inference → Knowledge), sekarang saya akan selalu mempertanyakan hal-hal seperti Validitas Data, kondisi pengjian, Objektivitas Analisis dan keterbatasan klaim saat membaca paper.
