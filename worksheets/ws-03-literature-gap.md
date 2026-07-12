@@ -77,39 +77,47 @@ Membandingkan deep learning 2024 dengan decision tree sederhana tanpa justifikas
 ```
 LITERATURE MAPPING
 
-Topik      : ____________________
-Database   : ____________________
-Query      : ____________________
-Tahun      : ____________________
-Hasil awal : ____ paper → Screening → ____ paper final
+Topik      : Perbandingan Performa SQL (MySQL) vs NoSQL (MongoDB) pada Sistem Berbasis Web
+Database   : Google Scholar
+Query      : MYSQL, SQL, MongoDB, NoSQL, performance, response time
+Tahun      : 2021-2026
+Hasil awal : 9 paper → Screening → 5 paper final
 
 Literature Matrix (concept-centric):
 
 | Study | Tahun | Method | Data | Result | Limitation |
 |-------|-------|--------|------|--------|------------|
-|       |       |        |      |        |            |
+|Avrylya & Susetyo|2024|Eksperimen|1JT record|MongoDB lebih cepat dalam text indexing dibanding ArangoDB|Hanya Fokus pada pencarian teks|
+|Putra et al|2022|Eksperimen|20rb baris catur|PostgreSQL tercepat, MySQL & MongoDB bersaing|Beluum menguji sharding|
+|Hilman et al|2025|Studi literatur|13 paper|NoSQL unggul di skalabilitas, SQL unggul di konsistensi|Analisis bersifat sintesis, bukan uji empiris|
+|Ilham e al|2026|SLR|20 paper|MongoDB unggul di write-heavy, MySQL unggul di JOIN|Terbatas pada e-commerce skala kecil|
+|Saputra et al|2024|eksperimen|100rb data|MongoDB unggul di load data besar|belum ada pengujian sharding|
+
+   
 
 Pola yang ditemukan:
-  Metode dominan     : ____________________
-  Dataset umum       : ____________________
-  Limitasi berulang  : ____________________
+  Metode dominan     : Benchmarking berbasis waktu respon (latency) pada operasi CRUD
+  Dataset umum       : Dataset dari Kaggle atau data transaksi e-commerce/permainan
+  Limitasi berulang  : Banyak penelitian hanya menguji single-node dan belum mengeksplorasi arsitektur hibrida (Polyglot Persistence) 
 
 GAP IDENTIFICATION
 
-Gap 1: [Jenis: performance / method / data / context]
-  Deskripsi    : ____________________
-  Bukti        : ____________________
-  Signifikansi : ____________________
+Gap 1: [Jenis: method gap]
+  Deskripsi    : Kurangnya implementasi arsitektur basis data hibrida (menggabungkan SQL & NoSQL).
+  Bukti        : Kebanyakan penelitian hanya membandingkan head-to-head mana yang lebih cepat, bukan bagaimana mengintegrasikan keduanya
+  Signifikansi : Penting untuk sistem modern agar mendapatkan integritas transaksi (SQL) sekaligus fleksibilitas data (NoSQL) 
 
-Gap 2: [Jenis: ____]
-  Deskripsi    : ____________________
-  Bukti        : ____________________
-  Signifikansi : ____________________
+Gap 2: [Jenis: Context gap]
+  Deskripsi    : Kurangnya evaluasi pada cloud-native deployment dengan container
+  Bukti        : Sebagian besar pengujian dilakukan di lingkungan lokal
+  Signifikansi : Performa di lingkungan cloud akan berbeda karena adanya faktor latensi jaringan dan resource isolation
 
 Baseline Selection:
-| Baseline | Relevansi | Representatif | Source |
-|----------|-----------|---------------|--------|
-|          |           |               |        |
+| Baseline | Relevansi | Representatif |
+|----------|-----------|---------------|
+|MySQL|standar industri|paling banyak digunkan sebagai pembanding dalam penelitian performa database|
+|MongoDB|paradigma document-oriented|standar utama penelitian databaseNoSQL yang menonjolkan skalabilitas horizontal|
+
 ```
 
 ---
@@ -127,16 +135,19 @@ Gunakan topik riset dari WS-02. Cari minimal 5 paper relevan menggunakan databas
 **Query pencarian:** ____________________________________
 **Database:** ___________________________________________
 
-| # | Study | Tahun | Method | Dataset | Result | Limitasi |
-|---|-------|-------|--------|---------|--------|----------|
-| 1 | *Contoh: Rahman et al.* | *2023* | *CNN* | *ImageNet subset* | *Acc 91%* | *Hanya 3 kelas* |
-| 2 | | | | | | |
-| 3 | | | | | | |
-| 4 | | | | | | |
-| 5 | | | | | | |
+| # | Study | Tahun | Method | Data | Result | Limitation |
+|---|-------|-------|--------|------|--------|------------|
+| 1 |Avrylya & Susetyo|2024|Eksperimen|1JT record|MongoDB lebih cepat dalam text indexing dibanding ArangoDB|Hanya Fokus pada pencarian teks|
+| 2 |Putra et al|2022|Eksperimen|20rb baris catur|PostgreSQL tercepat, MySQL & MongoDB bersaing|Beluum menguji sharding|
+| 3 |Hilman et al|2025|Studi literatur|13 paper|NoSQL unggul di skalabilitas, SQL unggul di konsistensi|Analisis bersifat sintesis, bukan uji empiris|
+| 4 |Ilham e al|2026|SLR|20 paper|MongoDB unggul di write-heavy, MySQL unggul di JOIN|Terbatas pada e-commerce skala kecil|
+| 5 |Saputra et al|2024|eksperimen|100rb data|MongoDB unggul di load data besar|belum ada pengujian sharding|
 
-**Pola yang terlihat — Metode dominan:** ___________________
-**Limitasi yang berulang:** ______________________________
+   
+
+
+**Pola yang terlihat — Metode dominan:** Metode dominan: Benchmarking berbasis waktu respon (latency) pada operasi CRUD.
+**Limitasi yang berulang:** Mayoritas penelitian dilakukan di lingkungan single-node dan belum mengeksplorasi arsitektur hibrida (Polyglot Persistence). 
 
 ---
 
@@ -146,14 +157,14 @@ Berdasarkan tabel di Latihan 1, identifikasi gap.
 
 | Jenis Gap | Ditemukan? | Gap Statement |
 |-----------|-----------|---------------|
-| Performance Gap | [ ] Ya / [ ] Tidak | *Contoh: Akurasi turun di bawah 80% untuk kelas minoritas* |
-| Method Gap | [ ] Ya / [ ] Tidak | |
-| Data Gap | [ ] Ya / [ ] Tidak | |
-| Context Gap | [ ] Ya / [ ] Tidak | |
+| Performance Gap | [x] Ya / [ ] Tidak | Performa belum diuji pada arsitektur cloud-native yang terdistribusi |
+| Method Gap | [x] Ya / [ ] Tidak | Belum ada pendekatan hibrida (Polyglot Persistence) yang diuji secara empiris |
+| Data Gap | [ ] Ya / [ ] Tidak | - |
+| Context Gap | [x] Ya / [ ] Tidak | Evaluasi masih didominasi pengujian lokal (lab-based) |
 
-**Gap utama yang dipilih:** _____________________________
+**Gap utama yang dipilih:** Implementasi Arsitektur Hibrida (Polyglot Persistence) pada Lingkungan Cloud-Native.
 **Mengapa gap ini penting (bukan sekadar "belum ada yang meneliti")?**
-> ___________________________________________________
+> Karena di dunia nyata, jarang ada sistem besar yang hanya bergantung pada satu jenis database. Kebutuhan industri saat ini adalah sinergi antara integritas data SQL dan skalabilitas fleksibel NoSQL. Meneliti bagaimana kedua sistem ini berinteraksi dalam satu ekosistem yang terdistribusi adalah kontribusi yang jauh lebih relevan dibandingkan hanya membandingkan kecepatan CRUD dasar yang sudah sering dilakukan.
 
 ---
 
@@ -163,11 +174,11 @@ Pilih 2 baseline dari literatur yang sudah dibaca.
 
 | # | Baseline | Mengapa Relevan | Mengapa Representatif | Apakah SOTA? | Sumber |
 |---|----------|----------------|----------------------|-------------|--------|
-| 1 | *Contoh: RF + TF-IDF* | *Task sama: klasifikasi teks* | *Dipakai 6 dari 10 paper* | *Bukan, tapi common practice* | *Lee et al., 2022* |
-| 2 | | | | | |
+| 1 | MySQL (RDBMS) | Standar integritas data transaksional | Paling sering digunakan sebagai pembanding utama | Common Practice | Putra et al., 2022 |
+| 2 | MongoDB (NoSQL) | Standar integritas data transaksional | Standar utama skalabilitas horizontal NoSQL | Common Practice | Saputra et al., 2024 |
 
-**Apakah pemilihan baseline ini bisa dianggap straw man?** [ ] Ya / [ ] Tidak
-> Justifikasi: ________________________________________
+**Apakah pemilihan baseline ini bisa dianggap straw man?** [ ] Ya / [x] Tidak
+> Justifikasi: Tidak, karena kedua baseline ini adalah industry standard yang digunakan dalam kelima jurnal yang kita bahas. Menggunakan standar industri sebagai pembanding justru membuat riset Anda lebih kredibel, bukan "curang".
 
 ---
 
@@ -176,5 +187,4 @@ Pilih 2 baseline dari literatur yang sudah dibaca.
 > Apa perbedaan antara "belum ada yang meneliti ini" (klaim tanpa bukti) dengan research gap yang valid? Bagaimana cara membuktikan bahwa sebuah gap benar-benar ada?
 
 **Jawaban:**
-> ___________________________________________________
-> ___________________________________________________
+> Perbedaan fundamentalnya adalah: "Belum ada yang meneliti" hanyalah klaim subjektif jika tidak didasarkan pada mapping literatur yang sistematis. Sedangkan research gap yang valid adalah kesimpulan logis yang muncul setelah kita memetakan banyak riset terdahulu dan menemukan pola atau keterbatasan yang berulang. Cara membuktikan gap adalah dengan melakukan Systematic Literature Review (SLR) atau memetakan temuan-temuan dari 5 paper tersebut; jika kita melihat bahwa 5 paper tersebut semuanya memiliki keterbatasan yang sama (misal: semuanya di lingkungan lokal), maka di situlah letak gap yang valid untuk kita ambil sebagai topik riset baru.
