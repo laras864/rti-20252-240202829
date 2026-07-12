@@ -80,25 +80,25 @@ Jika variabel tidak bisa di-map ke komponen apapun → arsitektur perlu didesain
 ```
 SYSTEM-EXPERIMENT MAPPING
 
-Research Question: ____________________
+Research Question: Sejauh mana perbedaan performa latency dan throughput antara MySQL (SQL) dan MongoDB (NoSQL) dalam memproses transaksi data skala besar pada lingkungan cloud-native?
 
 Variable → Component Mapping:
 | Variabel | Tipe | Komponen Sistem | Cara Manipulasi/Pengukuran |
 |----------|------|-----------------|---------------------------|
-|          | IV   |                 |                           |
-|          | DV   |                 |                           |
-|          | CV   |                 |                           |
+|Jenis DBMS| IV   |Database Instance (MySQL vs MongoDB)|Swap kontainer Docker (Feature Toggles)|
+|Latency/Troughtput| DV   |Performance Monitor (K6 Metrics Collector)|Log extraction dari output hasil load test|
+|Hardware & Dataset| CV   |Cloud Resource Config & Data Generator||Fixed environment & Fixed seed pada Faker.js
 
 4 Prinsip Desain:
-  [ ] Traceability — Setiap komponen bisa ditelusuri ke variabel
-  [ ] Variable Isolation — IV bisa diubah tanpa mengubah CV
-  [ ] Measurement Integration — Pengukuran DV built-in
-  [ ] Reproducibility — Setup bisa direkonstruksi
+  [x] Traceability — Modul load test diatur untuk memanggil endpoint yang berbeda untuk setiap DBMS.
+  [x] Variable Isolation — Dataset (CV) tetap sama, hanya engine (IV) yang ditukar.
+  [x] Measurement Integration — engukuran DV (latency/RPS) dilakukan secara real-time oleh K6.
+  [x] Reproducibility — Setup menggunakan Docker Compose agar mudah direplikasi di lingkungan lain.
 
 Experimental Setup:
-  Input data     : ____________________
-  Parameter      : ____________________
-  Output format  : ____________________
+  Input data     : JSON dataset skala besar (100k, 500k, 1juta record)
+  Parameter      : Concurrency (100 user simultan), Duration (5 menit per test)
+  Output format  : CSV (berisi statistik latency rata-rata, P95, dan throughput RPS) 
 ```
 
 ---
@@ -111,11 +111,11 @@ Gunakan RQ dan variabel dari WS-05. Petakan ke komponen sistem.
 
 | Variabel | Tipe | Komponen Sistem | Cara Manipulasi / Pengukuran |
 |----------|------|-----------------|---------------------------|
-| *Contoh: Jenis model* | *IV* | *Modul classifier (swap RF ↔ CNN)* | *Ganti config `model_type`* |
-| | DV | | |
-| | CV | | |
+| Jenis DBMS | *IV* | Container Orchestrator (Docker) | Mengganti image database pada script |
+|Waktu Respon | DV |K6 Metrics Collector|Aggregated metric dari summary report K6|
+|Skala Data| CV |Python/JS Data Generator|Menyesuaikan parameter count pada generator data|
 
-**Apakah semua variabel bisa di-map?** [ ] Ya / [ ] Tidak
+**Apakah semua variabel bisa di-map?** [x] Ya / [ ] Tidak
 > Jika tidak, komponen apa yang perlu ditambahkan? _________
 
 ---
@@ -126,14 +126,14 @@ Evaluasi desain sistem terhadap 4 prinsip.
 
 | Prinsip | Status | Bukti / Penjelasan |
 |---------|--------|-------------------|
-| Traceability | *Contoh: ✅ — setiap modul punya label variabel* | |
-| Modularity | | |
-| Controllability | | |
-| Measurability | | |
+| Traceability | ✅ | Komponen load test terhubung langsung ke database instance |
+| Modularity | ✅ | Database layer terpisah secara logis dari application layer |
+| Controllability | ✅ | Konfigurasi sistem dikontrol melalui environment variables |
+| Measurability | ✅ | Tool K6 menghasilkan output statistik yang terukur secara otomatis |
 
-**Prinsip mana yang paling sulit dipenuhi?** _______________
+**Prinsip mana yang paling sulit dipenuhi?** Controllability.
 **Strategi untuk mengatasinya:**
-> ___________________________________________________
+> Menggunakan Docker dan YAML configuration sehingga setiap parameter (seperti alokasi RAM/CPU) terkunci dan bisa dipastikan konsisten antara MySQL dan MongoDB
 
 ---
 
@@ -146,14 +146,14 @@ Jika sistem memiliki 3 komponen utama, rencanakan ablation study.
 
 | Kondisi | Komponen A | Komponen B | Komponen C | Hasil yang Diharapkan |
 |---------|-----------|-----------|-----------|----------------------|
-| Full | *Contoh: ✅ CNN* | *Contoh: ✅ Temporal features* | *Contoh: ✅ Z-score norm* | *Baseline penuh* |
-| – A | ❌ (ganti RF) | ✅ | ✅ | |
-| – B | ✅ | ❌ (tanpa temporal) | ✅ | |
-| – C | ✅ | ✅ | ❌ (tanpa normalisasi) | |
+| Full | ✅ | ✅ | ✅ | Baseline performa total |
+| – A | ❌ | ✅ | ✅ | Dampak performa pada operasi tulis |
+| – B | ✅ | ❌ | ✅ | Dampak performa pada operasi baca |
+| – C | ✅ | ✅ | ❌ | Dampak performa pada kueri kompleks (JOIN/Agg) |
 
-**Komponen mana yang diprediksi paling berkontribusi?** _____
+**Komponen mana yang diprediksi paling berkontribusi?** Skenario C (Complex).
 **Mengapa?**
-> ___________________________________________________
+> Karena perbedaan arsitektur SQL (relasional) dan NoSQL (dokumen) akan terlihat paling tajam saat memproses kueri agregasi atau join data yang kompleks.
 
 ---
 
@@ -162,5 +162,4 @@ Jika sistem memiliki 3 komponen utama, rencanakan ablation study.
 > Apa risiko jika sistem dibangun seperti produk (monolitik, fitur lengkap) lalu baru dilakukan eksperimen? Mengapa arsitektur modular penting untuk riset?
 
 **Jawaban:**
-> ___________________________________________________
-> ___________________________________________________
+> Risiko jika sistem dibangun seperti produk (fitur lengkap) lalu baru bereksperimen adalah "Confounding Variables". Kita tidak akan tahu apakah performa buruk disebabkan oleh database, atau karena adanya overhead dari fitur lain (seperti logging yang berlebihan, sistem caching yang tidak disengaja, atau bottleneck di aplikasi). Arsitektur modular penting agar kita bisa melakukan isolasi variabel, memastikan bahwa perbedaan hasil performa benar-benar berasal dari DBMS yang diuji, bukan dari faktor luar.
