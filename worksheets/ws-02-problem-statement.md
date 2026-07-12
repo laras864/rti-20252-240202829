@@ -67,33 +67,33 @@ Masalah riset yang layak harus memenuhi 5 kriteria:
 PROBLEM STATEMENT BUILDER
 
 Domain & Konteks
-  Domain   : ____________________
-  Konteks  : ____________________
+  Domain   : Manajemen Basis Data (Database Management Systems) 
+  Konteks  : Pemilihan teknologi database untuk kebutuhan pengolahan data berskala besar (Big Data) pada instansi
 
 System Context
-  Input       : ____________________
-  Process     : ____________________
-  Output      : ____________________
-  Outcome     : ____________________
-  Constraints : ____________________
-  Stakeholders: ____________________
+  Input       : Dataset permainan catur (16 kolom, 20.058 baris)
+  Process     : Eksekusi kueri INSERT, SELECT, UPDATE, DELETE, SUM, dan COUNT pada MySQL, PostgreSQL, dan MongoDB 
+  Output      : Respon waktu eksekusi dalam satuan milidetik (ms)
+  Outcome     : Rekomendasi pemilihan DBMS yang efisien bagi instansi
+  Constraints : Pengujian menggunakan satu tabel tanpa relasi, hardware tunggal, dan sistem operasi Windows
+  Stakeholders: Pengembang sistem dan instansi yang membutuhkan efisiensi pemrosesan data
 
 Fenomena → Problem
-  Fenomena yang diamati             : ____________________
-  Gejala (symptom) yang terukur     : ____________________
-  Masalah yang didiagnosis          : ____________________
-  Masalah riset (researchable)      : ____________________
-  Variabel yang terukur             : ____________________
+  Fenomena yang diamati             : Kecepatan aplikasi sangat dipengaruhi oleh performa DBMS dalam memproses data
+  Gejala (symptom) yang terukur     : Adanya perbedaan waktu respon yang signifikan saat mengeksekusi kueri pada jenis DBMS yang berbeda
+  Masalah yang didiagnosis          : Ketidakpastian instansi dalam memilih antara DBMS relasional (MySQL, PostgreSQL) dan NoSQL (MongoDB) untuk performa terbaik
+  Masalah riset (researchable)      : Belum ada perbandingan performa respon waktu yang komprehensif antara MySQL, PostgreSQL, dan MongoDB pada skenario kueri standar (CRUD & Aggregation) menggunakan dataset yang sama
+  Variabel yang terukur             : Respon waktu kueri (response time) dalam milidetik (ms) 
 
 Problem Quality Check
-  [ ] Clarity — Apakah satu orang membaca akan paham?
-  [ ] Measurability — Apakah ada metrik kuantitatif?
-  [ ] Relevance — Apakah penting untuk domain?
-  [ ] Testability — Apakah bisa gagal?
-  [ ] Impact — Apakah ada kontribusi jika terjawab?
+  [ X ] Clarity — Apakah satu orang membaca akan paham?
+  [ X ] Measurability — Apakah ada metrik kuantitatif?
+  [ X ] Relevance — Apakah penting untuk domain?
+  [ X ] Testability — Apakah bisa gagal?
+  [ X ] Impact — Apakah ada kontribusi jika terjawab?
 
 Problem Statement (1 paragraf):
-  ____________________
+  Pemilihan DBMS yang tepat sangat krusial bagi instansi untuk menjamin kecepatan akses data pada aplikasi yang menangani volume data besar. Namun, terdapat ketidakpastian dalam menentukan jenis DBMS (relasional vs NoSQL) yang paling optimal karena performa sering kali bergantung pada skenario penggunaan. Riset ini mengukur dan membandingkan secara empiris waktu respon kueri pada MySQL, PostgreSQL, dan MongoDB untuk memberikan acuan teknis yang objektif bagi instansi dalam memilih teknologi basis data yang efisien.
 ```
 
 ---
@@ -102,17 +102,17 @@ Problem Statement (1 paragraf):
 
 Pilih satu topik di bidang TI yang diminati. Transformasikan melalui 5 tahap Problem Formation Model.
 
-**Topik awal:** ________________________________________
+**Topik awal:** Perbandingan performa DBMS untuk Big Data.
 
 | Tahap | Hasil |
 |-------|-------|
-| Reality | *Contoh: Aplikasi e-commerce sering ditinggalkan saat checkout* |
-| Observed Issue (Symptom) | *Contoh: Bounce rate checkout 68%* |
-| Diagnosed Problem (Root Cause) | |
-| Researchable Problem | |
-| Measurable Variable | |
+| Reality | Instansi membutuhkan database cepat namun sering bingung memilih antara SQL atau NoSQL |
+| Observed Issue (Symptom) | Aplikasi berjalan lambat saat memproses ribuan data |
+| Diagnosed Problem (Root Cause) | Efisiensi kueri DBMS yang belum teruji pada kasus penggunaan spesifik |
+| Researchable Problem | Membandingkan performa respon waktu MySQL, PostgreSQL, dan MongoDB dalam skenario kueri CRUD |
+| Measurable Variable | Waktu respon eksekusi kueri (milidetik) |
 
-**Apakah terjebak solution-first thinking?** [ ] Ya / [ ] Tidak
+**Apakah terjebak solution-first thinking?** [ ] Ya / [x] Tidak
 > Jika ya, kembali ke tahap mana? ________________________
 
 ---
@@ -123,14 +123,14 @@ Gambarkan konteks sistem dari masalah riset di Latihan 1.
 
 | Komponen | Deskripsi |
 |----------|----------|
-| Input | *Contoh: Request HTTP dari browser pengguna* |
-| Process | |
-| Output | |
-| Outcome | |
-| Constraints | |
-| Stakeholders | |
+| Input | Data catur |
+| Process | Operasi kueri |
+| Output | Tabel dan grafik waktu respon |
+| Outcome | Keputusan pemilihan database |
+| Constraints | Dataset tunggal tanpa relasi |
+| Stakeholders |Instansi |
 
-**Komponen mana yang paling relevan dengan masalah riset?** _______________
+**Komponen mana yang paling relevan dengan masalah riset?** Process (karena membandingkan efisiensi kueri setiap DBMS) 
 
 ---
 
@@ -140,18 +140,16 @@ Evaluasi problem statement yang sudah dibuat menggunakan 5 kriteria.
 
 | Kriteria | Skor (1-5) | Justifikasi |
 |----------|-----------|-------------|
-| Clarity | *Contoh: 4 — cukup jelas tapi perlu spesifikasi dataset* | |
-| Measurability | | |
-| Relevance | | |
-| Testability | | |
-| Impact | | |
+| Clarity | 5 | Masalah sangat spesifik(membandingkan 3 Database) |
+| Measurability | 5 | Menggunakan satuan milidetik |
+| Relevance | 4 | Sangat relevan bagi pengembangan sistem |
+| Testability | 5 | Eksperimen dapat diulang |
+| Impact | 4 | Memberikan acuan pada pemelihan teknoogi |
 
-**Skor total:** _____ / 25
+**Skor total:** 23 / 25
 
 **Problem statement versi final (1 paragraf):**
-> ___________________________________________________
-> ___________________________________________________
-
+> Meskipun pemilihan Database Management System (DBMS) merupakan faktor krusial bagi efisiensi sistem informasi di instansi, pengembang sering kali menghadapi ketidakpastian dalam memilih antara DBMS relasional (seperti MySQL dan PostgreSQL) dan NoSQL (seperti MongoDB) karena performa yang sangat bervariasi bergantung pada beban kerja kueri. Hingga saat ini, belum terdapat acuan teknis yang komprehensif mengenai perbandingan performa respon waktu kueri ketiga DBMS tersebut dalam skenario operasional yang seragam. Riset ini bertujuan untuk memberikan landasan empiris dengan mengukur dan membandingkan secara objektif waktu eksekusi kueri CRUD dan Aggregation pada dataset yang sama, sehingga hasil penelitian ini dapat menjadi referensi teknis yang objektif bagi instansi dalam memilih infrastruktur basis data yang paling efisien sesuai dengan kebutuhan operasionalnya.
 ---
 
 ## Refleksi
@@ -159,5 +157,4 @@ Evaluasi problem statement yang sudah dibuat menggunakan 5 kriteria.
 > Bandingkan "masalah" yang biasa ditemui saat coding (bug, error) dengan masalah riset. Apa perbedaan fundamental dalam cara mendefinisikan dan mendekati keduanya?
 
 **Jawaban:**
-> ___________________________________________________
-> ___________________________________________________
+> Perbedaan mendasar terletak pada tujuan dan eksistensi masalahnya. Bug atau error saat coding adalah masalah praktis yang memiliki jawaban benar/salah (solusi teknis); jika bug diperbaiki, masalah selesai. Sebaliknya, masalah riset mendefinisikan sebuah celah pengetahuan (gap) yang belum terjawab. Riset tidak hanya mencari "perbaikan", tetapi mencari pemahaman mengapa suatu fenomena terjadi (misalnya, mengapa PostgreSQL lebih cepat dari MongoDB dalam skenario tertentu), dengan hasil yang harus teruji secara empiris dan dapat direplikasi oleh peneliti lain untuk memperkaya pengetahuan ilmiah.
