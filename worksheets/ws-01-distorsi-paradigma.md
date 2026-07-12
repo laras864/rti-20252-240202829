@@ -61,8 +61,8 @@ Dalam DSR, artefak **bukan tujuan akhir** — ia adalah instrumen untuk menghasi
 ## Template A.1 — Research Mindset Self-Assessment
 
 ```
-Nama Peneliti    : ____________________
-Tanggal          : ____________________
+Nama Peneliti    : Anindiya Larasati
+Tanggal          : 12 Juli 2026
 
 1. Ketika membaca klaim "metode X 95% akurat":
    - Pertanyaan pertama saya: ____________________
