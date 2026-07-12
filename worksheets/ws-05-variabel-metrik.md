@@ -66,19 +66,20 @@ Metrik harus ditentukan **sebelum** eksperimen. Memilih metrik setelah melihat d
 ```
 VARIABLE & METRIC DEFINITION
 
-Research Question: ____________________
+Research Question: Sejauh mana perbedaan performa latency dan throughput antara MySQL (SQL) dan MongoDB (NoSQL) dalam memproses transaksi data skala besar pada lingkungan cloud-native?
 
 | Variabel | Tipe | Konsep | Metrik | Skala | Satuan | Cara Mengukur | Justifikasi |
 |----------|------|--------|--------|-------|--------|---------------|-------------|
-|          | IV   |        |        |       |        |               |             |
-|          | DV   |        |        |       |        |               |             |
-|          | CV   |        |        |       |        |               |             |
+|Jenis DBMS| IV   |Arsiktektur Basis Data|Perbandingan SQL vs NoSQL|Nominal|-|Konfigurasi sistem|Menentukan paradigma data yang dibandingkan|
+|Latency| DV   |Kecepatan Respon|Average Response Time|Ratio|ms|Benchmarking tool (JMeter/K6)|Indikator utama performa real-time|
+|Throughtput| DV   |Kapasistas distem|Requests Per Second|Ratio|RPS|Benchmarking tool|Indikator skalabilitas dan beban kerja|
+|Skala Data| CV   |Volume data|Jumlah Record|Ratio|data point|Penambahan entri dataset|Menjaga konsistensi beban kerja|
 
 Alignment Check:
   RQ → Concept → Variable → Metric → Data → Result
-  [ ] Setiap langkah terdokumentasi
-  [ ] Tidak ada "lompatan logis"
-  [ ] Metrik mengukur apa yang dimaksud (construct validity)
+  [x] Setiap langkah terdokumentasi
+  [x] Tidak ada "lompatan logis"
+  [x] Metrik mengukur apa yang dimaksud (construct validity)
 ```
 
 ---
@@ -91,11 +92,12 @@ Gunakan RQ dari WS-04. Definisikan variabel dan metriknya.
 
 | Variabel | Tipe | Konsep Abstrak | Metrik Konkret | Skala (NOIR) | Satuan |
 |----------|------|---------------|----------------|-------------|--------|
-| *Contoh: Jenis model* | *IV* | *Pendekatan klasifikasi* | *Categorical: CNN vs RF* | *Nominal* | *—* |
-| | DV | | | | |
-| | CV | | | | |
+| Jenis DBMS | *IV* | Paradigma basis data |MySQL vs MongoDB| Nominal | - |
+| Waktu respon | DV | Kecepatan akses data |Mean Response Time|Ratio|Ms|
+| Jumlah transaksi | DV | Kapasitas olah data |Throughput (RPS)|Ratio|RPS|
+| Spesifikasi server | CV | Insfrastruktur fisik |CPU, RAM, Network|Ratio |GHz, GB|
 
-**Apakah ada lompatan logis dalam rantai?** [ ] Ya / [ ] Tidak
+**Apakah ada lompatan logis dalam rantai?** [ ] Ya / [x] Tidak
 > Jika ya, di mana? ____________________________________
 
 ---
@@ -106,15 +108,15 @@ Evaluasi metrik DV yang dipilih di Latihan 1 menggunakan 3 kriteria.
 
 | Kriteria | Skor (1-5) | Justifikasi |
 |----------|-----------|-------------|
-| Representative | *Contoh: 4 — F1-Score mewakili keseimbangan precision-recall* | |
-| Sensitive | | |
-| Feasible | | |
+| Representative | 5 |Latency dan throughput adalah standar industri untuk performa DBMS|
+| Sensitive | 4 |Metrik ini mampu menangkap perubahan kecil saat beban data meningkat|
+| Feasible | 5 |Data mudah dikumpulkan otomatis menggunakan tool benchmarking seperti K6|
 
-**Apakah perlu secondary metric?** [ ] Ya / [ ] Tidak
-> Jika ya, apa dan mengapa? _____________________________
+**Apakah perlu secondary metric?** [x] Ya / [ ] Tidak
+> Jika ya, apa dan mengapa? Secondary metric: Error Rate (%). Mengapa: Untuk memastikan bahwa performa cepat tidak didapatkan karena kueri yang gagal/error.
 
 **Contoh kasus ceiling effect untuk metrik ini:**
-> ___________________________________________________
+> Ketika latency mencapai batas minimal hardware (misal < 0.1ms), peningkatan efisiensi kueri tidak akan terlihat lagi karena dibatasi oleh latensi jaringan (network overhead).
 
 ---
 
@@ -124,10 +126,10 @@ Bayangkan data yang akan dikumpulkan dari eksperimen. Evaluasi 4 dimensi kualita
 
 | Dimensi | Pertanyaan | Jawaban | Strategi Mitigasi |
 |---------|-----------|---------|------------------|
-| Completeness | *Apakah semua data point terkumpul?* | | |
-| Consistency | *Apakah ada kontradiksi internal?* | | |
-| Validity | *Apakah benar-benar mengukur yang dimaksud?* | | |
-| Representativeness | *Apakah sampel mewakili populasi target?* | | |
+| Completeness | *Apakah semua data point terkumpul?* |Ya, semua log tersimpan| Automated logging ke database terpisah |
+| Consistency | *Apakah ada kontradiksi internal?* |Mungkin terjadi jitter| Menggunakan median dan outlier removal |
+| Validity | *Apakah benar-benar mengukur yang dimaksud?* |Ya, latency adalah awaktu murni| Isolasi environment dari proses background |
+| Representativeness | *Apakah sampel mewakili populasi target?* |Ya, dataset simulasi e-cmemerce| Menggunakan dataset yang bervariasi (read/write mix) |
 
 ---
 
@@ -136,5 +138,4 @@ Bayangkan data yang akan dikumpulkan dari eksperimen. Evaluasi 4 dimensi kualita
 > Mengapa memilih metrik setelah melihat data dianggap p-hacking? Apa bedanya dengan eksplorasi data yang sah?
 
 **Jawaban:**
-> ___________________________________________________
-> ___________________________________________________
+> Memilih metrik setelah melihat data (p-hacking) adalah praktik tidak etis karena peneliti secara sengaja mencari "signifikansi" atau hasil yang bagus dengan mengubah metrik yang dipakai, bukan menguji hipotesis awal. Eksplorasi data yang sah dilakukan untuk memahami karakteristik data sebelum pengujian, sedangkan p-hacking dilakukan untuk memaksa hasil agar sesuai dengan keinginan peneliti. Dalam riset yang ketat, metrik utama wajib didaftarkan sebelum eksperimen dimulai (pre-registration).
