@@ -109,23 +109,22 @@ Dokumentasikan environment untuk eksperimen Anda (boleh environment saat ini ata
 
 | Komponen | Spesifikasi |
 |----------|------------|
-| CPU | *Contoh: Intel Core i7-12700H, 14 Core* |
-| RAM | *Contoh: 32 GB DDR5* |
-| GPU | *Contoh: NVIDIA RTX 3060 6GB / CPU-only jika tidak ada GPU* |
-| OS | *Contoh: Ubuntu 22.04 LTS / Windows 11* |
-| Runtime | |
-| Framework | |
-| Random Seed | |
+| tools/software | Zotero (Reference Manager), MS Excel (Matriks Analisis) |
+| search engine | Google Scholar, IEEE Xplore |
+| Protocol | Kueri: "MySQL vs MongoDB" AND "Performance" AND "Cloud" |
+| Inclusion Criteria | Paper terbitan 2022-2026, fokus pada perbandingan performa DBMS |
+| Exlusion Criteria | Paper tanpa data empiris/benchmarking, paper dalam bahasa selain Indonesia/Inggris |
 
-**Dependencies (minimal 5):**
 
-| Library | Version | Alasan Dibutuhkan |
+**Dependencies (sumber literatur):**
+
+| Library | tahun | relevansi |
 |---------|---------|-------------------|
-| *Contoh: scikit-learn* | *1.3.2* | *Klasifikasi + evaluasi metrik* |
-| | | |
-| | | |
-| | | |
-| | | |
+| Putra et al. | 2022 | Benchmark dasar MySQL, PostgreSQL, MongoDB |
+| Hilman et al. | 2025 | Analisis skalabilitas SQL vs NoSQL |
+| Ilham et al. | 2026 | Performa e-commerce skala kecil |
+| Saputra et al. | 2024 | Performa beban data besar |
+| Avrylya & Susetyo | 2024 | Text indexing MongoDB vs ArangoDB |
 
 ---
 
@@ -133,25 +132,23 @@ Dokumentasikan environment untuk eksperimen Anda (boleh environment saat ini ata
 
 Rancang tes repeatability sederhana: jalankan kode yang sama 3× di environment yang sama.
 
-| Run | Seed | Metrik Utama | Hasil Sama? |
+| Run | Query String | Metrik Utama | Hasil Sama? |
 |-----|------|-------------|-------------|
-| 1 | *Contoh: 42* | *Contoh: Accuracy* | — |
-| 2 | | | [ ] Ya / [ ] Tidak |
-| 3 | | | [ ] Ya / [ ] Tidak |
+| 1 | "SQL vs NoSQL performance comparison" | 25 | — |
+| 2 | "SQL vs NoSQL performance comparison" | 25 | [x] Ya / [ ] Tidak |
+| 3 | "SQL vs NoSQL performance comparison" | 25 | [x] Ya / [ ] Tidak |
 
 **Jika hasil berbeda, kemungkinan penyebab:**
 
 > Penyebab umum non-repeatability:
-> - **Thermal throttling** — CPU/GPU overheating pada run berturut-turut → clock speed turun → waktu eksekusi berubah
-> - **Background process** — antivirus scan, update OS, atau cloud sync aktif saat run berlangsung
-> - **Cache dari run sebelumnya** — hasil tersimpan di memori/disk sehingga run berikutnya tidak menjalankan komputasi penuh
-> - **Random state tidak dikontrol di semua level** — Python seed di-set, tapi NumPy/PyTorch/TensorFlow punya seed independen
-
+> - Update database: Search engine (seperti Google Scholar) indeksnya berubah setiap waktu.
+> - Variasi Kueri: Search engine memiliki algoritma personalized ranking.
+> - Checklist kontrol: [x] Gunakan mode Incognito, [x] Catat tanggal akses, [x] Simpan URL permanen (DOI).
 ___________________________________________________
 
 **Checklist kontrol yang sudah diterapkan:**
-- [ ] Random seed di-set di semua level
-- [ ] Tidak ada background process yang mengganggu
+- [x] Random seed di-set di semua level
+- [x] Tidak ada background process yang mengganggu
 - [ ] Cache dibersihkan antar-run
 - [ ] Config file yang sama untuk semua run
 
@@ -162,25 +159,25 @@ ___________________________________________________
 Tulis README minimum untuk eksperimen Anda (6 komponen wajib).
 
 ```
-# Judul Eksperimen: ____________________
+# Judul Eksperimen: Studi Literatur Performa Basis Data SQL dan NoSQL
 
-## 1. Environment
-> (Salin spesifikasi dari Latihan 1)
+## 1. Protocol
+> Penelusuran literatur dilakukan menggunakan PRISMA-lite framework untuk memastikan sistematika pengumpulan data.
 
-## 2. Installation
-> (Langkah instalasi, misal: "pip install -r requirements.txt")
+## 2. Tools
+> Zotero untuk manajemen referensi; Excel untuk pemetaan literatur (concept-centric table).
 
-## 3. Data
-> (Deskripsi data: sumber, format, ukuran)
+## 3. Data Source
+> 5 jurnal utama (Putra, Hilman, Ilham, Saputra, Avrylya) dengan rentang tahun 2022-2026.
 
 ## 4. Execution
-> (Command untuk menjalankan eksperimen)
+> Langkah: Pencarian kueri → Screening Judul → Membaca Abstrak → Sintesis Data.
 
 ## 5. Configuration
-> (File config yang digunakan + parameter kunci)
+> Kriteria inklusi: Riset empiris atau SLR; Kriteria eksklusi: Tutorial/Opini tanpa data.
 
 ## 6. Expected Output
-> (Contoh output yang diharapkan + format)
+> Tabel matriks perbandingan performa dan identifikasi research gap.
 ```
 
 ---
@@ -189,6 +186,6 @@ Tulis README minimum untuk eksperimen Anda (6 komponen wajib).
 
 > Apakah eksperimen Anda saat ini bisa direproduksi oleh orang lain tanpa bantuan Anda? Komponen apa yang masih hilang?
 
-**Level saat ini:** [ ] Repeatability / [ ] Reproducibility / [ ] Belum keduanya
+**Level saat ini:** [x] Repeatability / [ ] Reproducibility / [ ] Belum keduanya
 **Komponen yang belum terdokumentasi:**
-> ___________________________________________________
+> Mungkin perlu catatan lebih detail mengenai Search Engine Algorithms yang tidak selalu deterministik.
