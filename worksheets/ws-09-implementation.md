@@ -73,21 +73,21 @@ Mengandalkan "install library terbaru" berbahaya: versi berbeda = perilaku berbe
 EXPERIMENT SETUP DOCUMENTATION
 
 Hardware:
-  CPU     : ____________________
-  RAM     : ____________________
-  GPU     : ____________________
-  Storage : ____________________
+  CPU     : N/A
+  RAM     : N/A
+  GPU     : N/A
+  Storage : Google drive (cloud repository)
 
 Software:
-  OS        : ____________________
-  Runtime   : ____________________
-  Framework : ____________________
+  OS        : windows 11
+  Runtime   : web browser (chrome/edge)
+  Framework : Zotero (Reference Manager), MS Word/Google Docs (Sintesis)
 
 Dependencies:
 | Library | Version | Sumber | Hash/Checksum |
 |---------|---------|--------|---------------|
-|         |         |        |               |
-|         |         |        |               |
+|paperr 1-5|2022-2026|google sholar|link tersedia|
+
 
 Konfigurasi:
   Config file     : ____________________
@@ -95,10 +95,10 @@ Konfigurasi:
   Hyperparameters : ____________________
 
 Reproducibility Check:
-  [ ] Dependency terdokumentasi (requirements.txt / lock file)
-  [ ] Seed ditetapkan di semua level (Python, NumPy, framework)
-  [ ] Config di version control
-  [ ] README instruksi reproduksi lengkap
+  [x] Dependency terdokumentasi (Daftar Pustaka di Bab Referensi)
+  [x] Seed ditetapkan (Protokol SLR baku mengikuti PRISMA-lite)
+  [x] Config di version control
+  [x] README instruksi reproduksi lengkap
 ```
 
 ---
