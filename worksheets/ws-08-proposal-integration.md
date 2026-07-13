@@ -109,13 +109,13 @@ Kumpulkan hasil dari WS-02 sampai WS-07 menjadi satu ringkasan proposal.
 
 | Komponen | Sumber | Isi (1-2 kalimat) |
 |----------|--------|-------------------|
-| Problem Statement | WS-02 | *Contoh: Sistem rekomendasi memiliki akurasi tinggi (RMSE 0.87) tetapi satisfaction score rendah (45/100). Gap antara metrik teknis dan kepuasan pengguna belum diteliti.* |
-| Gap | WS-03 | *Contoh: Tidak ada studi yang mengintegrasikan collaborative filtering dengan user-context signals untuk meningkatkan satisfaction.* |
-| RQ | WS-04 | *Contoh: Apakah penambahan context-aware signals pada collaborative filtering meningkatkan satisfaction score tanpa menurunkan RMSE?* |
-| Hipotesis | WS-04 | *Contoh: H₁: Sistem CF+context menghasilkan satisfaction ≥ 70/100 dengan RMSE ≤ 0.90 dibanding baseline CF murni.* |
-| Variabel & Metrik | WS-05 | *Contoh: IV = jenis sistem (CF vs CF+context); DV = satisfaction score (skala 0-100) + RMSE (regresi).* |
-| Sistem | WS-06 | |
-| Desain Eksperimen | WS-07 | |
+| Problem Statement | WS-02 | Pertumbuhan data e-commerce yang masif menuntut efisiensi DBMS yang belum teruji konsistensinya. |
+| Gap | WS-03 | Kurangnya evaluasi empiris performa antara SQL dan NoSQL pada lingkungan terdistribusi/cloud-native. |
+| RQ | WS-04 | Apakah terdapat perbedaan performa latency dan throughput antara MySQL dan MongoDB pada sistem e-commerce berskala besar? |
+| Hipotesis | WS-04 | H₁: MongoDB memiliki throughput lebih tinggi, sedangkan MySQL unggul dalam latency konsisten pada beban kerja tertentu. |
+| Variabel & Metrik | WS-05 | IV: Jenis DBMS; DV: Latency (ms) & Throughput (RPS). |
+| Sistem | WS-06 | Dockerized MySQL dan MongoDB dengan K6 Load Generator. |
+| Desain Eksperimen | WS-07 | Comparison study dengan 5-10 kali pengulangan pada 100k-1juta record. |
 
 ---
 
@@ -125,19 +125,19 @@ Verifikasi 6 koneksi kritis. Isi dengan merujuk tabel di Latihan 1.
 
 | Koneksi | Status | Bukti |
 |---------|--------|-------|
-| Problem → Gap | *Contoh: ✅ — gap muncul dari 15 paper Bab 3 yang tidak ada yang mengkombinasikan CF + context untuk satisfaction* | |
-| Gap → RQ | *Contoh: ✅ — RQ langsung menanyakan apakah CF+context meningkatkan satisfaction* | |
-| RQ → Hypothesis | *Contoh: ✅ — H₁ memprediksi satisfaction ≥ 70 dengan threshold RMSE ≤ 0.90* | |
-| Hypothesis → Metric | | |
-| Metric → System | | |
-| System → Experiment | | |
+| Problem → Gap |✅ | Literasi menunjukkan bias pada pengujian lokal, kami mengisi gap dengan cloud-native test. |
+| Gap → RQ | ✅ | RQ secara eksplisit bertanya tentang performa di cloud-native untuk mengisi gap tersebut. |
+| RQ → Hypothesis | ✅ | Hipotesis memberikan prediksi terukur atas pertanyaan di RQ. |
+| Hypothesis → Metric | ✅ | Latency dan RPS adalah cerminan langsung dari prediksi performa di hipotesis. |
+| Metric → System | ✅ | K6 di sistem kami dirancang untuk mengeluarkan log latency dan RPS secara otomatis. |
+| System → Experiment | ✅ | Desain eksperimen kami menggunakan sistem tersebut untuk menjalankan skenario uji. |
 
 **Koneksi mana yang paling lemah?** _______________________
 **Bagaimana cara memperkuatnya?**
 > ___________________________________________________
 
-**Konsistensi horizontal — apakah istilah dan scope konsisten?** [ ] Ya / [ ] Tidak
-> Jika tidak, di bagian mana terjadi inkonsistensi? _________
+**Konsistensi horizontal — apakah istilah dan scope konsisten?** [x] Ya / [ ] Tidak
+> Jika tidak, di bagian mana terjadi inkonsistensi?
 
 ---
 
@@ -147,15 +147,15 @@ Evaluasi proposal mini menggunakan rubrik.
 
 | Kriteria | Skor (1-3) | Justifikasi |
 |----------|-----------|-------------|
-| Koherensi | *Contoh: 2 — koneksi gap→RQ masih lemah karena gap belum cukup narrow* | |
-| Specificity | *Contoh: 3 — metrik (satisfaction 0-100, RMSE) sudah terdefinisi numerik* | |
-| Feasibility | | |
-| Rigor | | |
+| Koherensi | 3 | Alur dari masalah ke desain eksperimen sudah sangat sinkron. |
+| Specificity | 3 | Metrik (ms, RPS) dan Threshold (p < 0.05) sudah sangat jelas. |
+| Feasibility | 3 | Menggunakan Docker dan K6 sangat realistis untuk dijalankan dalam 1-2 bulan. |
+| Rigor | 3 | Menggunakan standar industri dan threat analysis yang komprehensif. |
 
-**Skor total:** _____ / 12
+**Skor total:** 12 / 12
 
-**Apakah proposal siap untuk fase eksekusi?** [ ] Ya / [ ] Belum
-> Jika belum, apa yang perlu diperbaiki? __________________
+**Apakah proposal siap untuk fase eksekusi?** [x] Ya / [ ] Belum
+> Jika belum, apa yang perlu diperbaiki?
 
 ---
 
@@ -163,8 +163,6 @@ Evaluasi proposal mini menggunakan rubrik.
 
 > Dari seluruh proses WS-01 sampai WS-08, bagian mana yang paling mudah dan paling sulit? Mengapa? Apa yang akan dilakukan berbeda jika mengulang dari awal?
 
-**Bagian termudah:** ____________________________________
-**Bagian tersulit:** ____________________________________
-**Yang akan dilakukan berbeda:**
-> ___________________________________________________
-> ___________________________________________________
+**Bagian termudah:** WS-05 (Variabel & Metrik), karena secara teknis saya sudah memahami apa yang ingin diukur.
+**Bagian tersulit:** WS-03 (Gap Identification), karena harus membedakan antara "apa yang belum diteliti" dan "apa yang secara logis harus diteliti".
+**Yang akan dilakukan berbeda:**  Di awal, saya seharusnya tidak terlalu terobsesi mencari database yang "paling baru", tetapi fokus pada membandingkan standar industri yang paling relevan dengan masalah nyata.
