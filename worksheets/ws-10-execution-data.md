@@ -68,24 +68,25 @@ Run gagal/anomali tidak boleh dihapus tanpa dokumentasi. Bisa jadi:
 ```
 EXECUTION PLAN
 
-| Run # | Skenario | Seed | Parameter | Status | Waktu | Output File |
+| Run # | Skenario (paper) | Seed (iterasi) | Parameter(metriks/fokus) | Status | Waktu | Output File |
 |-------|----------|------|-----------|--------|-------|-------------|
-| 1     |          |      |           |        |       |             |
-| 2     |          |      |           |        |       |             |
-| 3     |          |      |           |        |       |             |
-| ...   |          |      |           |        |       |             |
+| 1     | paper 1 | 1 | Latency, Throughput | Planned | 10 Min | Extract_P1.json |
+| 2     | paper 2 | 1 | Latency, Throughput | Planned | 10 Min | Extract_P2.json |
+| 3     | paper 3 | 1 | Latency, Throughput | Planned | 10 Min | Extract_P3.json |
+| 4     | paper 4 | 1 | Latency, Throughput | Planned | 10 Min | Extract_P4.json |
+| 5     | paper 5 | 1 | Latency, Throughput | Planned | 10 Min | Extract_P5.json|
 
-Jumlah runs per skenario : ____
-Total runs               : ____
+Jumlah runs per skenario : 1 (Ekstraksi data kualitatif/kuantitatif dari dokumen)
+Total runs               : 5 paper
 
 DATA LOG (per run):
-  Run ID    : ____________________
-  Timestamp : ____________________
-  Skenario  : ____________________
-  Input     : ____________________
-  Output    : ____________________
-  Anomali   : ____________________
-  Catatan   : ____________________
+  Run ID    : E-P1 (Ekstraksi Paper 1)
+  Timestamp : 2026-07-12
+  Skenario  : analisis performa database
+  Input     : pdf paper 1
+  Output    : Data Latency 42ms, Throughput 1.5k RPS
+  Anomali   : tidak ada
+  Catatan   : Paper menggunakan benchmark YCSB, metrik sesuai kriteria inklusi.
 ```
 
 ---
@@ -93,18 +94,9 @@ DATA LOG (per run):
 ## Latihan 1 — Execution Plan
 
 Susun execution plan untuk eksperimen Anda. Tentukan skenario, jumlah run, dan seed sebelum eksekusi.
-
-| Run # | Skenario | Seed | Parameter Kunci | Status |
-|-------|----------|------|----------------|--------|
-| *1* | *Contoh: BERT-base, DS-1* | *42* | *lr=2e-5, epoch=10* | *Planned* |
-| *2* | *BERT-base, DS-1* | *123* | *lr=2e-5, epoch=10* | *Planned* |
-| 3 | | | | |
-| 4 | | | | |
-| 5 | | | | |
-
-**Total skenario:** ____
-**Run per skenario:** ____
-**Total run keseluruhan:** ____
+**Total skenario:** 2 (perbandingan SQL & NoSQL)
+**Run per skenario:** Run per skenario: 5 paper yang ditinjau
+**Total run keseluruhan:**  2 (perbandingan SQL & NoSQL
 
 ---
 
@@ -115,25 +107,25 @@ Desain format data log untuk eksperimen Anda. Tentukan field apa saja yang akan 
 **Identitas:**
 | Field | Contoh |
 |-------|--------|
-| Run ID | *run-001* |
-| Timestamp | *2025-03-15T10:30:00* |
-| | |
+| Run ID | E-P1 |
+| Timestamp | 2026-07-12 |
+
 
 **Konfigurasi:**
 | Field | Contoh |
 |-------|--------|
-| Seed | *42* |
-| Code version | *commit abc1234* |
-| | |
+| papertahun | 2022-2026 |
+| database | MYSL/MongoDB |
+
 
 **Hasil:**
 | Metrik | Tipe Data | Range Valid |
 |--------|----------|-------------|
-| *Contoh: Accuracy* | *float* | *0.0 – 1.0* |
-| | | |
-| | | |
+| Latency | float | 0-500 ms |
+| Throughput | float | 0-10.0k RPS |
 
-**Format output:** [ ] CSV / [ ] JSON / [ ] Database / [ ] Lainnya: ____
+
+**Format output:** [ ] CSV / [x] JSON / [ ] Database / [ ] Lainnya: ____
 
 ---
 
@@ -143,10 +135,9 @@ Rencanakan bagaimana menangani anomali. Untuk setiap jenis, tentukan langkah yan
 
 | Jenis Anomali | Contoh | Tindakan |
 |---------------|--------|----------|
-| Run gagal (crash) | *Contoh: OOM pada batch_size=64* | *Contoh: Dokumentasi, re-run batch_size=32, catat perubahan* |
-| Hasil ekstrem | | |
-| Waktu eksekusi anomali | | |
-| Inkonsistensi dengan run lain | | |
+| data hilang | paper tidk mencantumkan SD/mean | Dokumentasikan sebagai Missing Data atau hubungi penulis via email |
+| Metrik Berbeda | Metrik Berbeda | Lakukan konversi (Normalisasi) ke satuan standar (ms/RPS) |
+| Bias Penulis | Hasil "terlalu bagus" dari paper vendor | Beri catatan kritis di pembahasan (Threats to Validity) |
 
 **Prinsip:** Detect → Investigate → Document → Decide
 
@@ -157,6 +148,6 @@ Rencanakan bagaimana menangani anomali. Untuk setiap jenis, tentukan langkah yan
 > Pernahkah Anda melaporkan hasil riset/tugas dari single run? Apa risikonya? Bagaimana multiple run mengubah kepercayaan terhadap hasil?
 
 **Pengalaman sebelumnya:**
-> ___________________________________________________
+> Selama ini saya sering menyimpulkan performa hanya dari satu artikel tanpa mempertimbangkan variabilitas dari paper lain, yang berisiko membuat kesimpulan saya sangat bias terhadap metode penulis tersebut.
 **Yang akan dilakukan berbeda:**
-> ___________________________________________________
+> Saya akan memastikan setiap data yang saya ambil berasal dari minimal 5 paper yang berbeda untuk mendapatkan Mean dan Standard Deviation (sintesis), serta mencatat anomali data (seperti perbedaan metodologi benchmark) agar pembaca mengetahui batasan riset saya.
