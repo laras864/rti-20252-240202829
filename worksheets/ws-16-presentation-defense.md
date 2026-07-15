@@ -86,31 +86,36 @@ Prediksi pertanyaan berdasarkan kategori:
 DEFENSE PREPARATION
 
 Slide Deck Plan:
-  Total slides   : ____ (target: 10-12 konten + title/closing)
-  Time per slide : ~2 min
-  Total time     : ____ menit
+  Total slides   :  9 slide
+  Time per slide : ~1.5-2 min
+  Total time     : 15 menit
 
 Slide Outline:
 | # | Pesan Utama | Visual | Waktu |
 |---|-------------|--------|-------|
-| 1 | Title       |        | 30s   |
-| 2 | Problem     |        | 2min  |
-| 3 | Gap + RQ    |        | 2min  |
-| ..|             |        |       |
+| 1 | Title       | Judul & Diagram Ekosistem | 1min   |
+| 2 | Problem     | Grafik pertumbuhan data | 2min  |
+| 3 | Gap + RQ    | Tabel gap literatur | 1.5min  |
+| 4 | Metodologi: PRISMA-lite | Flowchart seleksi paper | 2 min|
+| 5 | Key Result: Tabel Sintesis | Tabel 1 (Matriks Performa) | 2 min|
+| 6 | Key Result: Pola Throughput | Grafik Bar Performa | 2 min |
+| 7 | Interpretasi: SQL vs NoSQL | Skema Use-Case (Trade-off) | 2 min|
+| 8 | Limitasi & Future Work | Checklist (Hardware bias) | 1.5 min|
+| 9 |Kesimpulan & Kontribusi| Poin-poin utama | 1min|
+
 
 Anticipatory Defense Matrix:
-| Kategori | Pertanyaan Potensial | Jawaban (CER) |
+| Kategori | Pertanyaan Potensial | Jawaban (CER) | 
 |----------|---------------------|---------------|
-| Problem  |                     |               |
-| Gap      |                     |               |
-| Method   |                     |               |
-| Results  |                     |               |
-| Generalization |               |               |
+| Problem  | Mengapa SQL vs NoSQL masih relevan? | Pilihan tepat krusial bagi biaya & skala, Data e-commerce terus meningkat eksponensial, Arsitektur yang salah menyebabkan degradasi performa jangka panjang. |
+| Method   | Mengapa hanya 5 paper? |5 paper sudah mewakili tren 2022-2026, Kriteria inklusi ketat pada jurnal bereputasi, Kualitas > Kuantitas untuk sintesis literatur yang mendalam.|
+| Results  | Mengapa NoSQL lebih unggul? | Unggul pada write-heavy & skalabilitas horizontal, Data Throughput NoSQL lebih tinggi (rata-rata 2.8k RPS), Skema fleksibel & eliminasi JOIN kompleks mempercepat I/O. |
+| Generalization | Apakah hasil ini berlaku untuk semua aplikasi? | Tidak, ada boundary condition, SQL masih unggul di JOIN kompleks/ACID ketat, NoSQL bukan silver bullet, pemilihan bergantung pada kebutuhan integrasi data. |
 
 Latihan:
-  Latihan 1: [tanggal] — [catatan timing & feedback]
-  Latihan 2: [tanggal] — [catatan timing & feedback]
-  Latihan 3: [tanggal] — [catatan timing & feedback]
+  Latihan 1: [tanggal] — [catatan timing & feedback] - isi setelah kamu latihan presentasi sendiri dengan stopwatch
+  Latihan 2: [tanggal] — [catatan timing & feedback] - isi setelah latihan kedua
+  Latihan 3: [tanggal] — [catatan timing & feedback] - isi setelah simulasi Q&A dengan teman/kolega
 ```
 
 ---
@@ -121,17 +126,17 @@ Rencanakan presentasi 15 menit untuk riset Anda.
 
 | # | Pesan Utama | Visual yang Digunakan | Waktu |
 |---|-------------|----------------------|-------|
-| 1 | *Contoh: Judul + konteks — rekomendasi vs kepuasan* | *Title slide, gambar sistem* | *1 min* |
-| 2 | *Contoh: Problem — RMSE tinggi tapi satisfaction rendah (45/100)* | *Bar chart: satisfaction vs RMSE per sistem* | *2 min* |
-| 3 | *Contoh: Gap + RQ — belum ada CF+context untuk satisfaction* | *Tabel gap literatur* | *1.5 min* |
-| 4 | | | |
-| 5 | | | |
-| 6 | | | |
-| 7 | | | |
-| 8 | | | |
-| 9 | | | |
+| 1 | Judul & Konteks Cloud-Native | Title slide & Diagram Ekosistem Cloud | 1 min |
+| 2 | Problem: Tantangan E-Commerce | Grafik tren data eksponensial | 2 min |
+| 3 | Gap & Research Question | Tabel perbandingan gap literatur | 1.5 min |
+| 4 | Metode: SLR PRISMA-lite | Flowchart seleksi literatur | 2 min |
+| 5 | Key Result: Tabel Sintesis | Tabel performa (MySQL vs MongoDB) | 2 min |
+| 6 | Key Result: Pola Throughput | Grafik bar throughput (RPS) | 2 min|
+| 7 | Interpretasi: Trade-off & Failures | Skema Use-Case (SQL vs NoSQL) | 2 min |
+| 8 | Limitasi & Arah Masa Depan | Checklist limitasi riset | 1.5 min|
+| 9 | Kesimpulan & Kontribusi | Poin kunci kontribusi riset | 1 min |
 
-**Total waktu estimasi:** ____ menit
+**Total waktu estimasi:** 15 menit
 
 ---
 
@@ -141,11 +146,11 @@ Prediksi 5 pertanyaan yang mungkin diajukan penguji, lalu siapkan jawaban CER.
 
 | # | Kategori | Pertanyaan | Claim | Evidence | Reasoning |
 |---|----------|-----------|-------|----------|-----------|
-| 1 | *Problem* | *Contoh: Mengapa fokus kepuasan, bukan akurasi?* | *Akurasi tinggi tidak menjamin kepuasan* | *Survey: 45/100 satisfaction meski RMSE 0.87* | *Gap antara metrik teknis dan pengalaman pengguna* |
-| 2 | *Method* | *Contoh: Mengapa hanya 3 dataset?* | *3 dataset mewakili variasi: small-clean, medium-clean, medium-noisy* | *Tabel karakteristik dataset di Bab Method* | *Generalisasi perlu validasi lanjut — tercatat sebagai limitasi* |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
+| 1 | Problem | Mengapa SQL vs NoSQL masih relevan? | Pilihan database krusial untuk biaya & skala | Data e-commerce naik eksponensial | Arsitektur salah = degradasi performa sistem |
+| 2 | Method | Mengapa hanya 5 paper? | 5 paper sudah mewakili tren 2022-2026. | Kriteria inklusi jurnal bereputasi | Kualitas > Kuantitas untuk sintesis literatur |
+| 3 | Result | Mengapa NoSQL lebih unggul? | Unggul pada write-heavy & skalabilitas | Throughput NoSQL rata-rata 2.8k RPS | Eliminasi JOIN kompleks mempercepat I/O |
+| 4 | Generalization | Apakah hasil ini mutlak? | Tidak, ada boundary condition | SQL masih unggul di JOIN kompleks/ACID | NoSQL bukan silver bullet untuk semua kasus |
+| 5 | Analysis | Bagaimana jika hasil paper berbeda? | Hasil berbeda adalah temuan (boundary) | Analisis variasi hardware per paper | Kontradiksi menunjukkan ketergantungan pada use-case |
 
 ---
 
@@ -159,10 +164,11 @@ Minta teman/kolega mengajukan 3 pertanyaan tentang riset Anda. Catat pertanyaan 
 | 3 | | | [ ] Direct [ ] Data-based [ ] Honest |
 
 **Pertanyaan yang paling sulit dijawab:**
-> ___________________________________________________
+> (isi setelah simulasi Q&A dilakukan)
 
 **Apa yang perlu disiapkan lebih baik:**
-> ___________________________________________________
+> (isi setelah simulasi Q&A dilakukan)
+
 
 ---
 
@@ -171,7 +177,7 @@ Minta teman/kolega mengajukan 3 pertanyaan tentang riset Anda. Catat pertanyaan 
 > Dari seluruh proses WS-01 sampai WS-16 — dari paradigma riset hingga presentasi — bagian mana yang paling mengubah cara Anda berpikir tentang riset? Apa satu hal yang akan selalu Anda terapkan di riset berikutnya?
 
 **Insight terbesar:**
-> ___________________________________________________
+> Saya menyadari bahwa riset literatur (SLR) bukan sekadar merangkum, melainkan "menghakimi" data yang ada dari berbagai sumber untuk menarik kesimpulan baru yang objektif.
 
 **Yang akan selalu diterapkan:**
-> ___________________________________________________
+> Prinsip CER (Claim-Evidence-Reasoning). Setiap argumen atau jawaban saya harus selalu berbasis pada data (Evidence) dan alur logika (Reasoning), bukan sekadar opini pribadi.
