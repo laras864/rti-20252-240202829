@@ -66,30 +66,28 @@ Jika gagal di langkah awal → tidak perlu lanjut.
 DATA VALIDATION CHECKLIST
 
 Completeness:
-  [ ] Semua skenario tercakup
-  [ ] Jumlah run sesuai rencana
-  [ ] Tidak ada file output hilang
-  Missing: ____ dari ____ data points
+  [x] Semua 5 jurnal telah dianalisis sesuai kriteria
+  [x] Matriks ekstraksi data terisi lengkap untuk semua parameter (Latency, Throughput, Load).\
+  [x] Tidak ada jurnal yang hilang dalam pemetaan
+  Missing: 0 dari 5 data paper
 
 Format Consistency:
-  [ ] Semua file format sama (CSV/JSON/...)
-  [ ] Header konsisten
-  [ ] Tipe data konsisten (numerik tetap numerik)
+  [x] Semua data diekstraksi ke dalam format matriks yang seragam (Excel/CSV)
+  [x] Definisi metrik konsisten (misal: semua satuan latency dikonversi ke milidetik)
+  [x] Skala pengukuran (misal: "tinggi/rendah" atau numerik) diseragamkan
 
 Range & Logic:
-  [ ] Nilai dalam range masuk akal
-  [ ] Tidak ada waktu negatif
-  [ ] Metrik 0–100%, tidak di luar range
-  Anomali ditemukan: ____________________
+  [x] Rentang tahun literatur sesuai (2022-2026).
+  [x] Tidak ada temuan yang secara logika bertentangan dengan arsitektur dasar DBMS tanpa penjelasan.
+  [x] Metrik yang diambil masuk akal dalam konteks cloud-native.
+  Anomali ditemukan: Variasi hasil pada P3 karena environment pengujian yang sangat spesifik (skala kecil)
 
 Cross-Validation:
-  [ ] Run identik → hasil mendekati
-  [ ] Trend konsisten dengan ekspektasi teori
+  [x] Temuan P1 didukung oleh P4 mengenai write-heavy throughput.
+  [x] Konsistensi trend antar paper terjaga sesuai teori arsitektur basis data.
 
 Keputusan:
-  [ ] Data siap analisis
-  [ ] Perlu cleaning
-  [ ] Perlu re-run (skenario: ____)
+  [x] Data siap analisis (Sintesis siap dibuat).
 ```
 
 ---
@@ -98,58 +96,39 @@ Keputusan:
 
 Verifikasi apakah semua data yang direncanakan sudah terkumpul.
 
-| Skenario | Run Direncanakan | Run Tercatat | Missing | Alasan |
+| paper id | juernal  | status ekstrasi | Missing | Alasan |
 |----------|-----------------|-------------|---------|--------|
-| *Contoh: BERT, DS-1* | *10* | *10* | *0* | *—* |
-| *LSTM, DS-3* | *10* | *8* | *2* | *OOM pada run 7 & 9* |
-| | | | | |
-| | | | | |
+| P1 | Putra et al. | lengkap | - | - |
+| P2 | Hilman et al. | lengkap | - | - |
+| P3 | Ilham et al. | lengkap | - | - |
+| P4 | Saputra et al. | lengkap | - | - |
+| P5 | Avrylya et al. | lengkap | - | - |
 
-**Total expected:** ____ | **Total actual:** ____ | **Missing:** ____
-
-**Keputusan untuk data missing:**
-> ___________________________________________________
+**Total expected:** 5 | **Total actual:** 5 | **Missing:** 0
 
 ---
 
 ## Latihan 2 — Anomaly Investigation
 
-Periksa data Anda untuk anomali. Gunakan metode IQR atau z-score.
+Dalam SLR, anomali adalah paper yang memberikan hasil "berlawanan" atau "tidak biasa" dibanding paper lainnya.
+| paper | hasil temuan | Kemungkinan penyebab | Keputuan |
+|-----|-------------|-------------|-------------|
+| P3 | MongoDB performa rendah | Environment (skala kecil/hanya 1 node) | Dokumentasikan sebagai limitasi single-node. | 
 
-**Dataset sampel (atau data Anda sendiri):**
-
-| Run | Accuracy (%) |
-|-----|-------------|
-| 1 | *91.2* |
-| 2 | *90.8* |
-| 3 | *91.5* |
-| 4 | *78.3* |
-| 5 | *91.0* |
-
-**Deteksi outlier:**
-- Q1 = ____ | Q3 = ____ | IQR = ____
-- Batas bawah (Q1 - 1.5×IQR) = ____
-- Batas atas (Q3 + 1.5×IQR) = ____
-- Outlier terdeteksi: ____
-
-**Investigasi (untuk setiap outlier):**
-
-| Outlier | Nilai | Kemungkinan Penyebab | Keputusan |
-|---------|-------|---------------------|-----------|
-| *Run 4* | *78.3* | *Contoh: thermal throttling setelah 3 run berturut* | *Re-run dengan cooling interval* |
-
+**Investigasi:**
+> Mengapa P3 berbeda? Setelah dianalisis, P3 menggunakan environment yang berbeda (lokal/non-cloud), sementara paper lain (P1, P2, P4) menggunakan cloud-native. Ini bukan anomali buruk, melainkan temuan tentang sensitivitas skala infrastruktur.
 ---
 
 ## Latihan 3 — Validation Report
 
 Buat laporan validasi ringkas untuk dataset eksperimen Anda.
 
-**1. Completeness:** ____% data terkumpul
-**2. Format:** [ ] Konsisten / [ ] Ada inkonsistensi: ____
-**3. Range check (anomali):** ____
-**4. Logic check:** [ ] Parameter sesuai plan / [ ] Ada ketidaksesuaian: ____
+**1. Completeness:** 100% data terkumpul
+**2. Format:** [x] Konsisten / [ ] Ada inkonsistensi: ____
+**3. Range check :** semua paper berada di rentang 2022-2026 sesuai kriteria
+**4. Logic check:** [x] Parameter sesuai plan / [ ] Ada ketidaksesuaian: ____
 
-**Kesimpulan:** [ ] Data siap analisis / [ ] Perlu tindakan: ____
+**Kesimpulan:** [x] Data siap analisis / [ ] Perlu tindakan: ____
 
 ---
 
@@ -157,5 +136,4 @@ Buat laporan validasi ringkas untuk dataset eksperimen Anda.
 
 > Apa perbedaan antara "data yang benar" dan "data yang dipercaya"? Mengapa proses validasi formal diperlukan meskipun data dikumpulkan secara otomatis?
 
-> ___________________________________________________
-> ___________________________________________________
+> Data yang "benar" adalah apa yang tertulis di paper. Data yang "dipercaya" adalah data yang setelah divalidasi memiliki konteks metodologi yang jelas dan tidak bias. Jurnal peer-reviewed menjamin kualitas riset, namun tidak menjamin bahwa hasilnya berlaku untuk semua skenario. Validasi formal diperlukan agar kita tidak salah melakukan generalisasi hasil. Contoh: Kita tidak boleh mengklaim "MongoDB selalu lebih cepat" hanya karena 1 paper menyebutkan demikian, tanpa melihat apakah environment yang digunakan sama atau tidak dengan konteks riset kita.
