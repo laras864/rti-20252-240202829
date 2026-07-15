@@ -132,22 +132,20 @@ Buat consistency matrix untuk memverifikasi internal consistency paper Anda.
 
 |  | Intro | Method | Result | Discussion | Conclusion |
 |--|-------|--------|--------|-----------|-----------|
-| *Contoh: RQ1* | *✓* | *✓* | *✓* | *✓* | *✓* |
-| *Contoh: Metrik | *✗ ←* | *✗ ←* | *✓* | *✗ ←* | *✗ ←* |
-| RQ1 | | | | | |
-| RQ2 | | | | | |
-| Metrik utama | | | | | |
-| Variabel IV | | | | | |
-| Variabel DV | | | | | |
-| Klaim/kontribusi | | | | | |
+| RQ1 | *✓* | *✓* | *✓* | *✓* | *✓* |
+| RQ2 | *✓* | *✓* | *✓* | *✓* | *✓* |
+| Metrik utama | *✓* | *✓* | *✓* | *✓* | *✓* |
+| Variabel IV | *✓* | *✓* | *✓* | *✓* | *✓* |
+| Variabel DV | *✓* | *✓* | *✓* | *✓* | *✓* |
+| Klaim/kontribusi | *✓* | *✗* | *✓* | *✓* | *✓* |
 
 **Isi setiap sel:** ✓ (ada & konsisten), ✗ (missing), ~ (ada tapi inkonsisten)
 
 **Inkonsistensi yang ditemukan:**
-> ___________________________________________________
+> Deskripsi variabel tidak mendetail di bab Method.
 
 **Tindakan perbaikan:**
-> ___________________________________________________
+> Menambahkan sub-bab definisi operasional variabel di Method.
 
 ---
 
@@ -160,18 +158,17 @@ Ambil satu paragraf dari tulisan Anda (atau tulis paragraf baru) dan evaluasi ku
 
 | Kriteria | Evaluasi | Perbaikan |
 |----------|---------|-----------|
-| Clarity | *Contoh: kalimat ke-3 ambigu — "performa" bisa berarti accuracy atau speed* | *Ubah menjadi: "accuracy meningkat..."* |
-| Precision | | |
-| Conciseness | | |
+| Clarity | Ambigu, tidak teknis | Gunakan istilah throughput dan scalability |
+| Precision | "Sering lambat" tidak eksak | Gunakan data latency dalam ms |
+| Conciseness | Terlalu santai/informal | Gunakan kalimat pasif formal/akademik |
 
 **Paragraf setelah perbaikan:**
-> (tulis paragraf yang sudah diperbaiki)
-
+> Hasil sintesis literatur menunjukkan bahwa MongoDB (NoSQL) memiliki throughput rata-rata 2.8k RPS, lebih tinggi dibandingkan MySQL yang mencapai 1.5k RPS pada beban kerja write-heavy, mengindikasikan keunggulan skalabilitas horizontal NoSQL dalam ekosistem cloud-native.
 ---
 
 ## Refleksi
 
 > Apa perbedaan antara menulis "tentang" riset dan menulis sebagai "argumen" riset? Bagaimana urutan penulisan (Method → Discussion → Introduction) mengubah kualitas tulisan?
 
-> ___________________________________________________
-> ___________________________________________________
+> Menulis "tentang" hanya bersifat deskriptif (hanya memaparkan data), sedangkan menulis "argumen" menyusun bukti agar pembaca yakin bahwa temuan kita (pemilihan database sesuai beban kerja) adalah keputusan yang valid dan berbasis data.
+> Menulis Method & Result terlebih dahulu memastikan kerangka data saya solid. Saat menulis Introduction dan Discussion setelahnya, argumen saya jadi lebih tajam karena sudah didasari oleh temuan yang nyata, bukan sekadar asumsi di awal.
