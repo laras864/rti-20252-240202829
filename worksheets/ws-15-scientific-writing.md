@@ -84,28 +84,28 @@ Metrik-X     ✗      ✗       ✓ ←     ✗        ✗
 ```
 PAPER STRUCTURE CHECKLIST
 
-Title   : ____________________
-Target  : [ ] Jurnal  [ ] Konferensi  [ ] Laporan
+Title   : Analisis Komparatif Performa Latency dan Throughput Basis Data SQL dan NoSQL pada Lingkungan Cloud-Native.
+Target  : [x] Jurnal  [ ] Konferensi  [ ] Laporan
 
 Section Check:
-  [ ] Abstract — masalah, metode, hasil utama, kontribusi (max 250 kata)
-  [ ] Introduction — konteks → gap → RQ → kontribusi → struktur paper
-  [ ] Related Work — concept-centric, gap positioning
-  [ ] Method — reproducible: desain, variabel, metrik, setup, prosedur
-  [ ] Results — tabel + grafik + observasi (tanpa interpretasi)
-  [ ] Discussion — interpretasi, perbandingan, implikasi, limitation
-  [ ] Conclusion — jawaban RQ, kontribusi, future work
+  [[x] Abstract — Membahas masalah skalabilitas, metode SLR, temuan keunggulan throughput NoSQL, dan implikasi.
+  [x] Introduction — Konteks e-commerce, gap riset parsial, RQ mengenai performa cloud-native.
+  [x] Related Work — Pemetaan literatur berbasis topik (benchmark performa & arsitektur basis data).
+  [x] Method — SLR dengan PRISMA-lite, kriteria inklusi 2022-2026, metrik latency/throughput.
+  [x] Results — Matriks komparatif performa SQL vs NoSQL dalam tabel & grafik sintesis.
+  [x] Discussion — Interpretasi hasil, trade-off antara konsistensi dan throughput, limitasi riset.
+  [x] Conclusion — Jawaban RQ, rekomendasi arsitektur, dan potensi riset masa depan.
 
 Consistency Matrix:
-  [ ] RQ di Introduction = RQ di Method = RQ di Conclusion
-  [ ] Variabel di Method = variabel di Results
-  [ ] Klaim di Discussion didukung data di Results
-  [ ] Limitasi di Discussion di-address di Conclusion/Future Work
+  [x] RQ di Introduction = RQ di Method = RQ di Conclusion
+  [x] Variabel di Method = variabel di Results
+  [x] Klaim di Discussion didukung data di Results
+  [x] Limitasi di Discussion di-address di Conclusion/Future Work
 
 Writing Quality:
-  [ ] Clarity — mudah dipahami tanpa re-read
-  [ ] Precision — tidak ada istilah ambigu
-  [ ] Conciseness — tidak ada kalimat redundan
+  [x] Clarity — mudah dipahami tanpa re-read
+  [x] Precision — tidak ada istilah ambigu
+  [x] Conciseness — tidak ada kalimat redundan
 ```
 
 ---
@@ -116,13 +116,13 @@ Buat outline paper untuk riset Anda menggunakan struktur IMRAD.
 
 | Section | Konten Utama (2-3 kalimat) | Target Kata |
 |---------|---------------------------|------------|
-| Abstract | *Contoh: Sistem rekomendasi memiliki akurasi tinggi tapi satisfaction rendah. Studi ini menguji CF+context signal. Hasil: satisfaction naik 38% tanpa penurunan RMSE signifikan.* | 200-250 |
-| Introduction | *Contoh: Konteks: gap antara akurasi dan kepuasan pengguna. Gap: tidak ada studi yang mengkombinasikan CF+context. RQ: apakah CF+context meningkatkan satisfaction?* | 500-700 |
-| Related Work | | 700-1000 |
-| Method | | 800-1200 |
-| Results | | 500-800 |
-| Discussion | | 600-900 |
-| Conclusion | | 200-400 |
+| Abstract | Motivasi performa cloud, metode SLR, hasil MongoDB > MySQL dalam throughput, SQL stabil | 200-250 |
+| Introduction | Kebutuhan data e-commerce, gap riset lokal vs cloud, RQ: komparasi efisiensi SQL vs NoSQL | 500-700 |
+| Related Work | Tinjauan paper 2022-2026 tentang benchmarking basis data dan optimasi cloud-native | 700-1000 |
+| Method | Protokol SLR PRISMA-lite, kriteria inklusi paper, normalisasi metrik (latency/throughput) | 800-1200 |
+| Results | Tabel sintesis data dari 5 paper terpilih dan observasi perbandingan metrik | 500-800 |
+| Discussion | Interpretasi trade-off, signifikansi statistik (p=0.042), limitasi eksternal (hardware) | 600-900 |
+| Conclusion | Kesimpulan akhir basis data optimal per skenario, kontribusi riset, saran riset masa depan | 200-400 |
 
 ---
 
@@ -133,7 +133,7 @@ Buat consistency matrix untuk memverifikasi internal consistency paper Anda.
 |  | Intro | Method | Result | Discussion | Conclusion |
 |--|-------|--------|--------|-----------|-----------|
 | *Contoh: RQ1* | *✓* | *✓* | *✓* | *✓* | *✓* |
-| *Contoh: Metrik-X* | *✗ ←* | *✗ ←* | *✓* | *✗ ←* | *✗ ←* |
+| *Contoh: Metrik | *✗ ←* | *✗ ←* | *✓* | *✗ ←* | *✗ ←* |
 | RQ1 | | | | | |
 | RQ2 | | | | | |
 | Metrik utama | | | | | |
