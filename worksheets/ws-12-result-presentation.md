@@ -65,25 +65,27 @@ Keduanya **saling melengkapi**:
 ```
 RESULT PRESENTATION PLAN
 
-Research Question : ____________________
-Metrik Utama      : ____________________
+Research Question: Sejauh mana perbedaan performa latency dan throughput antara SQL dan NoSQL dalam menangani transaksi data skala besar?
+Metrik Utama: Latency (ms) dan Throughput (RPS)
 
-Tabel Hasil:
-| Skenario | Metrik 1 (mean ± std) | Metrik 2 (mean ± std) | n |
-|----------|----------------------|----------------------|---|
-|          |                      |                      |   |
+Tabel Hasil(Sintesis Literatur):
+| DBMS | Avg Latency (ms) |Avg Throughput (RPS) | Dataset Size | Referensi (Paper) |
+|----------|----------------------|----------------------|----------|----------------|
+| MySQL | 45.2 ± 5.2 | 1.2k ± 0.2k | 100k - 1jt | P1, P2 |
+| MongoDB | 38.5 ± 4.1 | 2.5k ± 0.5k | 100k - 1jt | P1, P3, P4 |
 
 Visualisasi yang Direncanakan:
 | # | Jenis Grafik | Pesan Utama | Metrik |
 |---|-------------|-------------|--------|
-| 1 |             |             |        |
-| 2 |             |             |        |
+| 1 | Grouped Bar Chart | MongoDB unggul di throughput pada large scale | Throughput |
+| 2 | Box Plot (Sintesis) | MySQL memiliki stabilitas latency yang lebih konsisten | Latency |
+| 3 | Trade-off Scatter | NoSQL untuk Write-Heavy, SQL untuk Complex Read | Latency vs RPS |
 
 Bias Check:
-  [ ] Y-axis mulai dari 0 (atau dijustifikasi)
-  [ ] Error bar/CI ditampilkan
-  [ ] Semua data disertakan (tidak cherry-picked)
-  [ ] Tidak menggunakan 3D tanpa alasan
+  [x] Y-axis mulai dari 0 (untuk menghindari kesan "jauh lebih unggul" yang semu).
+  [x] Error bar ditampilkan (menggambarkan rentang dari 5 paper berbeda).
+  [x] Semua data disertakan (tidak cherry-picking paper yang memenangkan satu vendor).
+  [x] Tidak menggunakan 3D (tetap 2D agar data mudah dibaca).
 ```
 
 ---
@@ -92,11 +94,10 @@ Bias Check:
 
 Buat tabel hasil eksperimen Anda (boleh dengan data simulasi jika belum punya data riil).
 
-| Skenario | Metrik 1 (mean ± std) | Metrik 2 (mean ± std) | n |
-|----------|----------------------|----------------------|---|
-| *Contoh: BERT-base* | *88.4 ± 1.2%* | *45.2 ± 3.1 min* | *10* |
-| | | | |
-| | | | |
+| DBMS | Metrik Latency (ms) | Metrik Throughput (RPS) | Paper Sumber |
+|----------|----------------------|----------------------|-------------|
+| MySQL | 42.0 ± 8.5 | 1.5k ± 0.3k | P1, P2, P5 |
+| MongoDB | 35.5 ± 7.2 | 2.8k ± 0.7k | P1, P3, P4 |
 
 **Checklist tabel:**
 - [ ] Self-contained (judul jelas, satuan ada, N tercantum)
@@ -112,9 +113,9 @@ Rencanakan 2-3 grafik untuk menyajikan data dari Latihan 1. Setiap grafik = satu
 
 | # | Jenis Grafik | Pesan | Data yang Digunakan |
 |---|-------------|-------|---------------------|
-| 1 | *Contoh: Bar chart + error bar* | *Perbandingan accuracy antar 3 model* | *Mean accuracy ± std* |
-| 2 | *Box plot* | *Distribusi F1 per model* | *Semua run F1* |
-| 3 | *Scatter plot* | *Trade-off accuracy vs training time* | *Mean accuracy vs mean time* |
+| 1 | Grouped Bar Chart | Perbandingan Throughput MySQL vs MongoDB | Nilai Mean RPS |
+| 2 | Error Bar Plot | Rentang variasi Latency antar literatur | Mean ± Std Dev |
+| 3 | Radar Chart | Trade-off fitur (Read vs Write vs Scalability) | Skor kualitatif (1-5) |
 
 ---
 
@@ -126,10 +127,9 @@ Evaluasi visualisasi berikut untuk bias (skenario dari contoh):
 
 | Pertanyaan | Jawaban |
 |-----------|---------|
-| Apakah Y-axis menyesatkan? | *Contoh: Ya — A terlihat 2× B padahal beda 0.4%* |
-| Apakah error bar ditampilkan? | |
-| Apakah semua kondisi ditampilkan? | |
-| Apa solusinya? | |
+| Apakah Y-axis menyesatkan? | Tidak, kami menetapkan Y-axis dari 0 agar perbedaan performa terlihat proporsional (tidak manipulatif) |
+| Apakah error bar ditampilkan? | Ya, ini krusial untuk menunjukkan bahwa data berasal dari 5 paper yang berbeda (variabilitas antar paper)|
+| Apa solusinya jika data dari paper tidak mencantumkan Std Dev? | Kami akan menggunakan rentang minimum dan maksimum dari paper tersebut sebagai batas error bar |
 
 **Evaluasi grafik Anda sendiri dari Latihan 2:**
 - [ ] Semua bias check lulus
@@ -141,5 +141,7 @@ Evaluasi visualisasi berikut untuk bias (skenario dari contoh):
 
 > Mengapa tabel dan grafik keduanya diperlukan — tidak cukup salah satu saja? Pernahkah Anda membuat grafik yang (tanpa sengaja) menyesatkan?
 
-> ___________________________________________________
-> ___________________________________________________
+> Mengapa tabel dan grafik keduanya diperlukan dalam SLR?
+Tabel diperlukan agar pembaca dapat melakukan verifikasi data mentah dari setiap paper yang disintesis (presisi). Grafik diperlukan agar pembaca bisa langsung menangkap "benang merah" dari riset yang kita lakukan tanpa harus membaca angka satu per satu.
+> Pernahkah Anda membuat grafik yang menyesatkan?
+Seringkali grafik dibuat tanpa menyertakan referensi (N), sehingga pembaca mengira angka tersebut adalah hasil riset penulis sendiri, padahal itu hasil sintesis dari paper lain. Hal ini bisa menyesatkan secara etik.
